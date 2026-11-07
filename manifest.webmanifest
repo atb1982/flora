@@ -1,0 +1,14 @@
+{
+  "name": "Blue Ridge Plants: bilingual field guide",
+  "short_name": "Blue Ridge",
+  "description": "Plants of Asheville, Boone and the Blue Ridge Parkway, in English and Spanish.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E7ECE9",
+  "theme_color": "#2D4A3F",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

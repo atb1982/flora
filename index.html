@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blue Ridge Plants</title>
+<meta name="description" content="Bilingual field guide to plants of Asheville, Boone and the Blue Ridge Parkway, for a November visit.">
+<meta name="theme-color" content="#2D4A3F">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Blue Ridge">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Spectral:ital,wght@0,500;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fog:#E7ECE9; --paper:#F7F9F7; --ink:#1B2622; --ink2:#4A5A54; --rule:#C3CDC8;
+  --spruce:#2D4A3F; --spruce-soft:#DCE6E0; --lichen:#C9D3B2; --hazel:#E0A92A; --hazel-soft:#F6E3B3;
+  --bud:#6E3B5C; --bud-soft:#EADCE5; --track:#D5DDD9;
+  --sans:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --nav-h:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --fog:#111816; --paper:#18221E; --ink:#E2E9E5; --ink2:#A7B6AF; --rule:#2E3B36;
+    --spruce:#9CC4B4; --spruce-soft:#21302A; --lichen:#3A4A35; --hazel:#E8B640; --hazel-soft:#3D3217;
+    --bud:#D9A2C6; --bud-soft:#3A2534; --track:#26332E; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fog);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5}
+a{color:var(--spruce);text-underline-offset:2px}
+:focus-visible{outline:3px solid var(--hazel);outline-offset:2px}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+h1,h2,h3{line-height:1.2;margin:0}
+h1{font-family:var(--serif);font-weight:500;font-size:1.75rem}
+h2{font-family:var(--serif);font-weight:500;font-size:1.35rem;margin:1.6rem 0 .5rem}
+h3{font-size:1rem;font-weight:700;margin:1.1rem 0 .25rem}
+p{margin:.35rem 0}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+
+/* language visibility */
+body.l-en .es, body.l-es .en{display:none !important}
+.blk{display:block}
+body.l-both p.es, body.l-both .blk.es{color:var(--ink2);border-left:2px solid var(--rule);padding-left:.6rem;margin-top:.2rem}
+body.l-both span.es.alt::before{content:" / ";color:var(--ink2)}
+body.l-both span.es.alt{color:var(--ink2)}
+.es{font-style:normal}
+body.l-both .tabs .es{display:none}
+[id]{scroll-margin-top:72px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:var(--spruce);color:#fff;padding:calc(env(safe-area-inset-top) + 8px) 16px 8px}
+@media (prefers-color-scheme: dark){.top{background:#1D302A}}
+.top .row{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.brand{color:#fff;text-decoration:none;font-family:var(--serif);font-size:1.15rem;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand i{font-style:italic}
+.langs{display:flex;border:1px solid rgba(255,255,255,.5);border-radius:8px;overflow:hidden;flex:none}
+.langs button{background:none;border:0;color:#fff;padding:6px 10px;font-size:.85rem;min-height:36px;cursor:pointer}
+.langs button[aria-pressed="true"]{background:#fff;color:var(--spruce);font-weight:700}
+@media (prefers-color-scheme: dark){.langs button[aria-pressed="true"]{color:#1D302A}}
+
+/* bottom nav */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--rule);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
+.tabs a{flex:1;max-width:136px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 6px;text-decoration:none;color:var(--ink2);font-size:.78rem;min-height:var(--nav-h)}
+.tabs a svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tabs a[aria-current="page"]{color:var(--spruce);font-weight:700}
+main{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 24px)}
+
+/* intro band */
+.intro{background:var(--paper);border-bottom:1px solid var(--rule);padding:18px 0 14px}
+.intro h1{margin-bottom:.35rem}
+.nowline{display:flex;gap:10px;align-items:flex-start;margin-top:.6rem}
+.dot{flex:none;width:12px;height:12px;border-radius:50%;background:var(--hazel);margin-top:.4rem;box-shadow:0 0 0 3px var(--hazel-soft)}
+
+/* filters */
+.search{width:100%;font:inherit;padding:12px 14px;border:1.5px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink);margin:14px 0 10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;margin:0 -16px;padding-left:16px;padding-right:16px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--rule);background:var(--paper);border-radius:999px;padding:7px 13px;font-size:.9rem;min-height:40px;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--spruce);border-color:var(--spruce);color:var(--paper);font-weight:700}
+.toggle{display:flex;align-items:center;gap:10px;font-size:.95rem;padding:4px 0 8px;cursor:pointer}
+.toggle input{width:22px;height:22px;accent-color:var(--hazel)}
+.count{color:var(--ink2);font-size:.9rem;margin:.2rem 0 .6rem}
+
+/* species index */
+.group h2{margin-top:1.4rem}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.list li{border-bottom:1px solid var(--rule)}
+.list a{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;padding:10px 0;text-decoration:none;color:inherit;min-height:84px}
+.thumb{width:72px;height:72px;border-radius:6px;background:var(--track) center/cover no-repeat;overflow:hidden;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .ph{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-style:italic;color:var(--ink2);font-size:1.4rem}
+.nm{font-weight:700;line-height:1.25}
+.nm .es.alt{font-weight:400}
+.sci{font-family:var(--serif);font-style:italic;color:var(--ink2);font-size:.98rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tag{font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--spruce-soft);color:var(--ink)}
+.tag.r{background:var(--bud-soft);color:var(--bud);font-weight:700}
+.tag.n{background:var(--hazel-soft)}
+.seenmark{width:22px;height:22px;color:var(--spruce)}
+.compare{margin:.4rem 0 .8rem;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:2px 12px}
+.compare summary{cursor:pointer;padding:10px 0;font-weight:700;color:var(--spruce)}
+.compare svg{width:100%;height:auto}
+
+/* detail */
+.back{display:inline-flex;align-items:center;gap:6px;padding:12px 0;text-decoration:none;font-weight:700;min-height:44px}
+.hero{position:relative;margin:0 -16px;background:var(--track);aspect-ratio:4/3;overflow:hidden}
+.hero img{width:100%;height:100%;object-fit:cover}
+.hero .credit{position:absolute;left:0;right:0;bottom:0;padding:18px 12px 6px;font-size:.72rem;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.hero .credit a{color:#fff}
+.hero .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--ink2);text-align:center;padding:20px;font-size:.95rem}
+.title{padding:14px 0 4px}
+.title h1{font-size:1.6rem;font-family:var(--sans);font-weight:700}
+.title .es.alt{display:block;font-weight:400;font-size:1.2rem}
+body.l-both .title .es.alt::before{content:""}
+.title .bin{font-family:var(--serif);font-style:italic;font-size:1.35rem;margin-top:.2rem}
+.label{border:1.5px solid var(--ink);border-radius:3px;background:var(--paper);padding:10px 12px;margin:12px 0;font-size:.95rem}
+.label dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.label dt{color:var(--ink2)}
+.label dd{margin:0}
+.code{display:inline-block;padding:1px 8px;border-radius:4px;font-weight:700;font-size:.9rem}
+.code.X{background:var(--bud-soft);color:var(--bud)}
+.code.P{background:var(--spruce-soft);color:var(--spruce)}
+.code.B{background:var(--hazel-soft);color:var(--ink)}
+.now{background:var(--hazel);color:#1B2622;margin:14px -16px;padding:14px 16px 12px}
+.now h2{font-family:var(--sans);font-weight:700;font-size:1.05rem;margin:0 0 .3rem}
+.now p.es{color:#3B3420 !important;border-left-color:rgba(0,0,0,.25) !important}
+.now.off{background:var(--track);color:var(--ink)}
+.now.off p.es{color:var(--ink2) !important}
+.field h3{color:var(--spruce)}
+.gal-head{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1.5px solid var(--rule);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--paper);padding:7px 12px;min-height:40px;font-size:.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--spruce);color:var(--paper);font-weight:700}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:10px 0 4px}
+.gal button{padding:0;border:0;background:var(--track);aspect-ratio:1;overflow:hidden;cursor:zoom-in;border-radius:3px}
+.gal img{width:100%;height:100%;object-fit:cover}
+.note{font-size:.85rem;color:var(--ink2)}
+.links{list-style:none;padding:0;margin:.4rem 0}
+.links li{border-bottom:1px solid var(--rule)}
+.links a{display:flex;justify-content:space-between;gap:10px;padding:12px 0;min-height:44px;text-decoration:none;font-weight:700}
+.links a span.host{font-weight:400;color:var(--ink2);font-size:.85rem;text-align:right}
+.mine{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px;margin:12px 0}
+.mine textarea{width:100%;min-height:96px;font:inherit;padding:10px;border:1.5px solid var(--rule);border-radius:8px;background:var(--fog);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--spruce);background:var(--spruce);color:var(--paper);border-radius:8px;padding:10px 16px;min-height:44px;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--spruce)}
+.prog{height:10px;background:var(--track);border-radius:5px;overflow:hidden;margin:10px 0 4px}
+.prog i{display:block;height:100%;width:0;background:var(--hazel);transition:width .2s}
+
+/* generic blocks */
+.blocks{list-style:none;margin:0;padding:0}
+.blocks>li{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;margin:10px 0}
+.blocks h3{margin-top:0;font-size:1.05rem}
+.meta{font-size:.9rem;color:var(--ink2);margin:.15rem 0 .4rem}
+.splinks{display:flex;flex-wrap:wrap;gap:6px;margin:.5rem 0}
+.splinks a{font-size:.85rem;padding:3px 9px;border-radius:999px;background:var(--spruce-soft);text-decoration:none;color:var(--ink)}
+.splinks a.n{background:var(--hazel-soft)}
+.maplinks{display:flex;gap:14px;flex-wrap:wrap;margin-top:.4rem;font-weight:700;font-size:.95rem}
+ol.steps{padding-left:1.4rem}
+ol.steps li{margin:.5rem 0}
+.check{list-style:none;padding:0}
+.check li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--rule)}
+.check input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--spruce)}
+table{width:100%;border-collapse:collapse;font-size:.92rem;margin:.6rem 0}
+th,td{text-align:left;vertical-align:top;padding:7px 6px;border-bottom:1px solid var(--rule)}
+th{color:var(--ink2);font-weight:700}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.toc a{padding:6px 12px;border:1.5px solid var(--rule);border-radius:999px;text-decoration:none;font-size:.9rem;background:var(--paper);color:var(--ink)}
+.callout{border-left:4px solid var(--bud);background:var(--bud-soft);padding:10px 12px;border-radius:0 6px 6px 0;margin:12px 0}
+.callout.g{border-color:var(--spruce);background:var(--spruce-soft)}
+
+/* charts */
+.elev{position:relative;margin:10px 0 6px}
+.elev-sites{position:relative;height:58px}
+.elev-sites span{position:absolute;transform:translateX(-50%);font-size:.72rem;line-height:1.15;text-align:center;white-space:nowrap}
+.elev-sites span.r2{top:28px}
+.elev-sites span b{display:block;font-weight:700}
+.elev-body{position:relative}
+.elev-line{position:absolute;top:0;bottom:0;width:0;border-left:1.5px dashed var(--ink2);opacity:.45}
+.elev-row{position:relative;padding:3px 0 6px}
+.elev-name{font-size:.82rem;line-height:1.2}
+.elev-name i{font-family:var(--serif);color:var(--ink2)}
+.elev-track{position:relative;height:10px;background:var(--track);border-radius:5px;margin-top:3px}
+.elev-track b{position:absolute;top:0;bottom:0;border-radius:5px;background:var(--ink2)}
+.elev-track b.hi{background:var(--spruce)}
+.elev-track b.open{border-top-left-radius:0;border-bottom-left-radius:0}
+.elev-axis{position:relative;height:34px;border-top:1px solid var(--ink2);font-size:.7rem;color:var(--ink2)}
+.elev-axis span{position:absolute;transform:translateX(-50%);top:3px;text-align:center;line-height:1.15}
+.phen{display:grid;grid-template-columns:minmax(0,1fr) repeat(12,18px);gap:2px 2px;align-items:center;font-size:.8rem;margin:8px 0}
+.phen .mh{font-size:.68rem;color:var(--ink2);text-align:center}
+.phen .mh.nov{color:var(--ink);font-weight:700}
+.phen .nm2{padding-right:6px;line-height:1.15;overflow-wrap:anywhere}
+.phen .c{height:14px;background:var(--track);border-radius:2px}
+.phen .c.f{background:var(--spruce)}
+.phen .c.nov{box-shadow:inset 0 0 0 2px var(--hazel)}
+.phen .c.f.nov{background:var(--hazel)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.82rem;color:var(--ink2);align-items:center}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+/* conifer panels */
+.conifer{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule)}
+.conifer:last-child{border-bottom:0}
+.conifer svg{width:150px;height:96px}
+.conifer .nm{font-size:.95rem}
+.conifer p{font-size:.88rem;margin:.15rem 0}
+.draw{stroke:var(--ink2);fill:none;stroke-linecap:round}
+.draw .cone{fill:var(--track);stroke:var(--ink2)}
+
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:50;background:rgba(10,14,12,.94);display:flex;flex-direction:column;justify-content:center;color:#fff}
+#lb[hidden]{display:none}
+#lb img{max-height:78vh;width:100%;object-fit:contain}
+#lb .cap{padding:10px 16px;font-size:.85rem}
+#lb .cap a{color:#fff}
+#lb .x{position:absolute;top:calc(env(safe-area-inset-top) + 10px);right:12px;background:rgba(255,255,255,.15);border:0;color:#fff;border-radius:50%;width:44px;height:44px;font-size:1.4rem;cursor:pointer}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+</style>
+</head>
+<body class="l-both">
+<header class="top"><div class="row">
+  <a class="brand" href="#plants">Blue Ridge</a>
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="both">EN+ES</button>
+  </div>
+</div></header>
+
+<main id="app" class="wrap" tabindex="-1"></main>
+
+<nav class="tabs" aria-label="Sections">
+  <a href="#plants" data-tab="plants"><svg viewBox="0 0 24 24"><path d="M12 21V9"/><path d="M12 9c0-4 3-6 7-6 0 4-3 6-7 6z"/><path d="M12 13c0-3-2.5-5-6-5 0 3.5 2.5 5 6 5z"/></svg><span class="en">Plants</span><span class="es">Plantas</span></a>
+  <a href="#places" data-tab="places"><svg viewBox="0 0 24 24"><path d="M3 20l6-12 4 7 3-4 5 9z"/><circle cx="17" cy="6" r="2"/></svg><span class="en">Places</span><span class="es">Lugares</span></a>
+  <a href="#rules" data-tab="rules"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span class="en">Rules</span><span class="es">Reglas</span></a>
+  <a href="#kit" data-tab="kit"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5h6v2"/><path d="M4 12h16"/></svg><span class="en">Field kit</span><span class="es">Campo</span></a>
+  <a href="#more" data-tab="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><span class="en">More</span><span class="es">Más</span></a>
+</nav>
+
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo">
+  <button class="x" aria-label="Close">×</button>
+  <img alt="">
+  <div class="cap"></div>
+</div>
+
+<script src="species.js"></script>
+<script>
+(function(){
+'use strict';
+const SP = window.SPECIES, GR = window.GROUPS, byId = {};
+SP.forEach(s => byId[s.id] = s);
+const BBOX = 'swlat=35.2&swlng=-83.3&nelat=36.7&nelng=-81.2';
+const IMG_CACHE = 'brg-img-v1';
+const app = document.getElementById('app');
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const enc = encodeURIComponent;
+
+/* ---------- language ---------- */
+let lang = store.get('brg-lang', 'both');
+function setLang(l){
+  lang = l; store.set('brg-lang', l);
+  document.body.className = 'l-' + l;
+  document.documentElement.lang = l === 'es' ? 'es' : 'en';
+  document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === l));
+}
+document.querySelectorAll('.langs button').forEach(b => b.onclick = () => { const y = window.scrollY; setLang(b.dataset.lang); route(); window.scrollTo(0, y); });
+setLang(lang);
+
+/* text helpers: [English, Spanish] */
+const S = p => p ? `<span class="en">${p[0]}</span><span class="es alt">${p[1]}</span>` : '';
+const P = (p, cls) => p ? `<p class="en ${cls||''}">${p[0]}</p><p class="es ${cls||''}">${p[1]}</p>` : '';
+const H2 = (p, id) => `<h2${id ? ` id="${id}"` : ''}>${S(p)}</h2>`;
+const H3 = p => `<h3>${S(p)}</h3>`;
+const LI = p => `<li><span class="en blk">${p[0]}</span><span class="es blk">${p[1]}</span></li>`;
+const dotNum = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const comNum = n => n.toLocaleString('en-US');
+const toM = ft => Math.round(ft * 0.3048 / 10) * 10;
+function elevText(el){
+  if(!el) return null;
+  const [lo, hi, open] = el;
+  if(open) return [`From the foothills to about ${comNum(hi)} ft (${comNum(toM(hi))} m)`, `Desde las estribaciones hasta unos ${dotNum(toM(hi))} m`];
+  return [`About ${comNum(lo)} to ${comNum(hi)} ft (${comNum(toM(lo))} to ${comNum(toM(hi))} m)`, `Unos ${dotNum(toM(lo))} a ${dotNum(toM(hi))} m`];
+}
+const MON_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MON_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const STATUS = { E:['Endemic','Endémica'], N:['Near endemic','Casi endémica'], C:['Common','Común'], R:['Rare, protected','Rara, protegida'] };
+const CODES = {
+  X:['Never collect: photo only','No recolectar: solo foto'],
+  P:['Sample only with written permission on private land','Muestra solo con permiso escrito en terreno privado'],
+  B:['Buy a legal sample from a farm or nursery','Compren una muestra legal en finca o vivero']
+};
+const common = s => lang === 'es' ? s.es : s.en;
+
+/* ---------- images: Wikipedia lead images ---------- */
+let WIKI = store.get('brg-wiki', null);
+const wikiTitle = s => s.wk || s.sci;
+async function fetchJSON(url, ms){
+  const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), ms || 15000);
+  try{ const r = await fetch(url, {signal: ctl.signal}); if(!r.ok) throw new Error(r.status); return await r.json(); }
+  finally{ clearTimeout(t); }
+}
+async function loadWiki(force){
+  if(WIKI && !force && Date.now() - (WIKI.t || 0) < 1000*60*60*24*30) return WIKI;
+  try{
+    const titles = SP.map(wikiTitle);
+    const q = await fetchJSON('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail|name&pithumbsize=960&titles=' + enc(titles.join('|')));
+    const norm = {}, red = {}, pages = {};
+    (q.query.normalized || []).forEach(n => norm[n.from] = n.to);
+    (q.query.redirects || []).forEach(n => red[n.from] = n.to);
+    Object.values(q.query.pages || {}).forEach(p => pages[p.title] = p);
+    const out = { t: Date.now(), img: {} };
+    SP.forEach(s => {
+      let t = wikiTitle(s); t = norm[t] || t; t = red[t] || t;
+      const p = pages[t];
+      if(p && p.thumbnail) out.img[s.id] = { src: p.thumbnail.source, file: p.pageimage || '', page: t };
+    });
+    const files = [...new Set(Object.values(out.img).map(i => i.file).filter(Boolean))];
+    if(files.length){
+      try{
+        const c = await fetchJSON('https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=extmetadata&iiextmetadatafilter=Artist|LicenseShortName&titles=' + enc(files.map(f => 'File:' + f).join('|')));
+        const meta = {};
+        Object.values(c.query.pages || {}).forEach(p => {
+          const m = p.imageinfo && p.imageinfo[0] && p.imageinfo[0].extmetadata;
+          if(m) meta[p.title.replace(/^File:/, '').replace(/ /g, '_')] = {
+            artist: m.Artist ? m.Artist.value.replace(/<[^>]*>/g, '').trim() : '',
+            lic: m.LicenseShortName ? m.LicenseShortName.value : '' };
+        });
+        Object.values(out.img).forEach(i => { const m = meta[i.file.replace(/ /g, '_')]; if(m){ i.artist = m.artist; i.lic = m.lic; } });
+      }catch(e){}
+    }
+    WIKI = out; store.set('brg-wiki', out);
+  }catch(e){ if(!WIKI) WIKI = { t: 0, img: {} }; }
+  return WIKI;
+}
+const small = src => src.replace(/\/(\d+)px-/, '/250px-');
+function heroOf(id){ return WIKI && WIKI.img[id]; }
+
+/* ---------- images: iNaturalist observations ---------- */
+const LIC = 'cc0,cc-by,cc-by-nc,cc-by-sa,cc-by-nc-sa,cc-by-nd,cc-by-nc-nd';
+function inatURL(s, season, local){
+  return 'https://api.inaturalist.org/v1/observations?photos=true&quality_grade=research&order_by=votes&per_page=12'
+    + '&photo_license=' + LIC + '&taxon_name=' + enc(s.inat || s.sci)
+    + (season === 'late' ? '&month=10,11,12' : '') + (local ? '&' + BBOX : '');
+}
+async function loadInat(s, season){
+  const key = 'brg-inat-' + s.id + '-' + season;
+  const cached = store.get(key, null);
+  if(cached && Date.now() - cached.t < 1000*60*60*24*30) return cached;
+  try{
+    let res = await fetchJSON(inatURL(s, season, true)); let local = true;
+    if((res.results || []).length < 4){ res = await fetchJSON(inatURL(s, season, false)); local = false; }
+    const photos = [];
+    (res.results || []).forEach(o => {
+      const ph = (o.photos || [])[0]; if(!ph || !ph.url) return;
+      photos.push({ m: ph.url.replace('/square.', '/medium.'), l: ph.url.replace('/square.', '/large.'),
+        a: ph.attribution || '', o: o.uri || ('https://www.inaturalist.org/observations/' + o.id),
+        d: o.observed_on || '', p: o.place_guess || '' });
+    });
+    const out = { t: Date.now(), local, photos };
+    store.set(key, out); return out;
+  }catch(e){ return cached || { t: 0, local: false, photos: [], err: true }; }
+}
+
+/* ---------- personal notes ---------- */
+let SEEN = store.get('brg-seen', {});
+let NOTES = store.get('brg-notes', {});
+
+/* ---------- routing ---------- */
+let filt = store.get('brg-filter', { g: 'all', nov: false, q: '' });
+function route(){
+  const h = (location.hash || '#plants').slice(1);
+  const [view, arg] = h.split('/');
+  document.querySelectorAll('.tabs a').forEach(a => a.setAttribute('aria-current', a.dataset.tab === (view === 'plant' ? 'plants' : view) ? 'page' : 'false'));
+  if(view === 'plant' && byId[arg]) viewPlant(byId[arg]);
+  else if(view === 'places') viewPlaces();
+  else if(view === 'rules') viewRules();
+  else if(view === 'kit') viewKit();
+  else if(view === 'more') viewMore(arg);
+  else viewPlants();
+}
+window.addEventListener('hashchange', () => { route(); if(!location.hash.startsWith('#more/')) window.scrollTo(0, 0); });
+
+/* ---------- plants index ---------- */
+function thumbHTML(s){
+  const h = heroOf(s.id);
+  return `<span class="thumb"><span class="ph">${s.sci.charAt(0)}</span>${h ? `<img loading="lazy" alt="" src="${small(h.src)}" data-full="${h.src}" onerror="if(this.dataset.full&&this.src!==this.dataset.full){this.src=this.dataset.full}else{this.remove()}" style="position:relative">` : ''}</span>`;
+}
+function tagsHTML(s){
+  let t = `<span class="tag ${s.st === 'R' ? 'r' : ''}">${S(STATUS[s.st])}</span>`;
+  if(s.nov) t += `<span class="tag n">${S(['Identifiable now','Se reconoce ahora'])}</span>`;
+  return t;
+}
+function viewPlants(){
+  let html = `<section class="intro" style="margin:0 -16px;padding-left:16px;padding-right:16px">
+    <h1>${S(['Plants of the Blue Ridge','Plantas de la Blue Ridge'])}</h1>
+    ${P(['Asheville, Boone and the Blue Ridge Parkway in November. Most wildflowers are dormant; evergreens, bark, buds, fruit, mosses and lichens carry the season.','Asheville, Boone y la Blue Ridge Parkway en noviembre. La mayoría de las flores silvestres están en reposo; siempreverdes, corteza, yemas, frutos, musgos y líquenes sostienen la temporada.'])}
+    <div class="nowline"><span class="dot"></span><div>${P(['Yellow marks what you can identify this month. Witch hazel is in flower now.','El amarillo marca lo que se reconoce este mes. El hamamelis está en flor ahora.'])}</div></div>
+  </section>
+  <input class="search" type="search" placeholder="Search: name, nombre, genus" aria-label="Search plants" value="${(filt.q||'').replace(/"/g,'&quot;')}">
+  <div class="chips" role="group" aria-label="Group">
+    <button class="chip" data-g="all" aria-pressed="${filt.g==='all'}">${S(['All','Todas'])}</button>
+    ${GR.map(g => `<button class="chip" data-g="${g.id}" aria-pressed="${filt.g===g.id}">${S([g.en,g.es])}</button>`).join('')}
+  </div>
+  <label class="toggle"><input type="checkbox" ${filt.nov ? 'checked' : ''}> ${S(['Only plants you can identify in November','Solo plantas que se reconocen en noviembre'])}</label>
+  <div id="results"></div>`;
+  app.innerHTML = html;
+  const inp = app.querySelector('.search');
+  inp.oninput = () => { filt.q = inp.value; store.set('brg-filter', filt); renderList(); };
+  app.querySelectorAll('.chip').forEach(b => b.onclick = () => {
+    filt.g = b.dataset.g; store.set('brg-filter', filt);
+    app.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b)); renderList(); });
+  app.querySelector('.toggle input').onchange = e => { filt.nov = e.target.checked; store.set('brg-filter', filt); renderList(); };
+  renderList();
+}
+function renderList(){
+  const box = document.getElementById('results'); if(!box) return;
+  const q = (filt.q || '').trim().toLowerCase();
+  const match = s => (q || filt.g === 'all' || s.g === filt.g) && (!filt.nov || s.nov)
+    && (!q || [s.en, s.es, s.sci, s.fam].join(' ').toLowerCase().includes(q));
+  const shown = SP.filter(match);
+  let html = `<p class="count">${shown.length} ${S(['of ' + SP.length + ' species','de ' + SP.length + ' especies'])}</p>`;
+  GR.forEach(g => {
+    const items = shown.filter(s => s.g === g.id);
+    if(!items.length) return;
+    html += `<section class="group">${H2([g.en, g.es])}`;
+    if(g.id === 'con' && !q) html += `<details class="compare"><summary>${S(['Compare the three conifers','Comparar las tres coníferas'])}</summary>${coniferPanels()}</details>`;
+    if(g.id === 'shr' && !q) html += `<details class="compare"><summary>${S(['Compare rhododendron and laurel leaves','Comparar hojas de rododendro y laurel'])}</summary>${leafDrawing()}</details>`;
+    if(g.id === 'rar') html += P(['Never collect these, anywhere. Locations are given at mountain level on purpose.','Nunca las recolecten, en ningún lugar. Las ubicaciones se dan a nivel de montaña a propósito.'], 'note');
+    html += `<ul class="list">${items.map(s => `<li><a href="#plant/${s.id}">${thumbHTML(s)}
+      <span><span class="nm">${S([s.en, s.es])}</span><br><span class="sci">${s.sci}</span><span class="tags">${tagsHTML(s)}</span></span>
+      ${SEEN[s.id] ? '<svg class="seenmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-label="Seen"><path d="M5 12l5 5 9-10"/></svg>' : '<span></span>'}</a></li>`).join('')}</ul></section>`;
+  });
+  if(!shown.length) html += P(['No plant matches. Clear the search or choose All.','Ninguna planta coincide. Borren la búsqueda o elijan Todas.']);
+  box.innerHTML = html;
+}
+
+/* ---------- plant detail ---------- */
+function linksFor(s){
+  const name = s.inat || s.sci, wk = (s.wk || s.sci).replace(/ /g, '_');
+  const L = [];
+  if(s.tb) L.push(['NC State Extension Plant Toolbox', 'https://plants.ces.ncsu.edu/plants/' + s.tb + '/', ['Photos, description, soils','Fotos, descripción, suelos']]);
+  if(s.fws) L.push(['US Fish and Wildlife Service', s.fws, ['Status and recovery','Estatus y recuperación']]);
+  L.push(['iNaturalist', 'https://www.inaturalist.org/observations?photos=true&taxon_name=' + enc(name) + '&' + BBOX, ['More photos between Asheville and Boone','Más fotos entre Asheville y Boone']]);
+  L.push(['iNaturalist', 'https://www.inaturalist.org/taxa/search?q=' + enc(name), ['Species page and range map','Ficha de especie y mapa']]);
+  L.push(['Wikimedia Commons', 'https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=image&search=' + enc(s.sci), ['Free licensed images','Imágenes de licencia libre']]);
+  L.push(['Wikipedia', 'https://en.wikipedia.org/wiki/' + enc(wk), ['English article','Artículo en inglés']]);
+  L.push(['Wikipedia', 'https://es.wikipedia.org/w/index.php?search=' + enc(s.sci), ['Spanish article or search','Artículo o búsqueda en español']]);
+  if(s.g === 'rar' || ['abies-fraseri','rhododendron-catawbiense','picea-rubens'].includes(s.id)) L.push(['Grandfather Mountain', 'https://grandfather.com/endangered-species/', ['Rare species of the mountain','Especies raras de la montaña']]);
+  return `<ul class="links">${L.map(l => `<li><a href="${l[1]}" target="_blank" rel="noopener">${l[0]}<span class="host">${S(l[2])}</span></a></li>`).join('')}</ul>`;
+}
+function field(title, pair){ return pair ? `<div class="field">${H3(title)}${P(pair)}</div>` : ''; }
+let season = 'late';
+async function viewPlant(s){
+  const h = heroOf(s.id);
+  const sameGroup = SP.filter(x => x.g === s.g); const i = sameGroup.indexOf(s);
+  const prev = sameGroup[i-1], next = sameGroup[i+1];
+  app.innerHTML = `<a class="back" href="#plants">‹ ${S(['All plants','Todas las plantas'])}</a>
+  <figure class="hero" id="hero" style="margin-top:0">${h ? `<img src="${h.src}" alt="${s.en}, ${s.sci}" onerror="this.parentNode.innerHTML='<div class=ph>Photo not available offline</div>'"><figcaption class="credit">${creditWiki(h)}</figcaption>` : `<div class="ph">${S(['Loading photo','Cargando foto'])}</div>`}</figure>
+  <div class="title"><h1>${S([s.en, s.es])}</h1><div class="bin">${s.sci}</div></div>
+  <div class="label"><dl>
+    <dt>${S(['Family','Familia'])}</dt><dd>${s.fam}</dd>
+    <dt>${S(['Status','Estatus'])}</dt><dd>${S(STATUS[s.st])}${s.law ? `<br>${S(s.law)}` : ''}</dd>
+    <dt>${S(['Sample','Muestra'])}</dt><dd>${s.code.split('').map(c => `<span class="code ${c}">${S(CODES[c])}</span>`).join('<br>')}</dd>
+  </dl></div>
+  <section class="now ${s.nov ? '' : 'off'}"><h2>${S(['In November','En noviembre'])}</h2>${P(s.now)}</section>
+  ${field(['Look for','Qué buscar'], s.look)}
+  ${field(['Life cycle','Ciclo de vida'], s.life)}
+  ${s.fl ? field(['Flowers','Floración'], [`${MON_EN[s.fl[0]-1]} to ${MON_EN[s.fl[1]-1]}` + (s.g === 'con' ? ' (pollen cones)' : ''), `${MON_ES[s.fl[0]-1]} a ${MON_ES[s.fl[1]-1]}` + (s.g === 'con' ? ' (conos de polen)' : '')]) : ''}
+  ${field(['Habitat and soil','Hábitat y suelo'], s.hab)}
+  ${field(['Elevation','Altitud'], elevText(s.el))}
+  ${field(['Where to find it','Dónde encontrarla'], s.where)}
+  ${field(['Collecting','Recolección'], s.col)}
+  ${field(['Good to know','Para saber'], s.note)}
+  <div class="gal-head">${H2(['More photos','Más fotos'])}
+    <div class="seg" role="group" aria-label="Season"><button data-s="late" aria-pressed="${season==='late'}">${S(['Oct to Dec','oct a dic'])}</button><button data-s="all" aria-pressed="${season==='all'}">${S(['All seasons','Todo el año'])}</button></div></div>
+  <div id="gal"><p class="note">${S(['Loading photos from iNaturalist','Cargando fotos de iNaturalist'])}</p></div>
+  ${H2(['Links','Enlaces'])}${linksFor(s)}
+  <div class="mine">
+    <label class="toggle"><input type="checkbox" id="seen" ${SEEN[s.id] ? 'checked' : ''}> ${S(['I saw this plant','Vi esta planta'])}</label>
+    <label for="notes" class="note">${S(['My field notes (saved on this phone)','Mis notas de campo (guardadas en este teléfono)'])}</label>
+    <textarea id="notes" placeholder="Place, GPS, elevation, photo numbers, sample ID">${(NOTES[s.id] && NOTES[s.id].txt) || ''}</textarea>
+  </div>
+  <p style="display:flex;justify-content:space-between;gap:10px">${prev ? `<a href="#plant/${prev.id}">‹ ${common(prev)}</a>` : '<span></span>'}${next ? `<a href="#plant/${next.id}">${common(next)} ›</a>` : ''}</p>`;
+  app.querySelector('#seen').onchange = e => { if(e.target.checked) SEEN[s.id] = new Date().toISOString().slice(0,10); else delete SEEN[s.id]; store.set('brg-seen', SEEN); };
+  const ta = app.querySelector('#notes');
+  ta.oninput = () => { NOTES[s.id] = { txt: ta.value, at: new Date().toISOString() }; store.set('brg-notes', NOTES); };
+  app.querySelectorAll('.seg button').forEach(b => b.onclick = () => { season = b.dataset.s; app.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b)); fillGallery(s); });
+  fillGallery(s);
+}
+function creditWiki(h){
+  const who = [h.artist, h.lic].filter(Boolean).join(', ');
+  return `<a href="https://en.wikipedia.org/wiki/File:${enc(h.file)}" target="_blank" rel="noopener">${who ? 'Photo: ' + who : 'Photo: Wikipedia, tap for author and license'}</a>`;
+}
+async function fillGallery(s){
+  const box = document.getElementById('gal'); if(!box) return;
+  const data = await loadInat(s, season);
+  if(!document.getElementById('gal')) return;
+  if(!heroOf(s.id) && data.photos.length){
+    const hero = document.getElementById('hero');
+    const p = data.photos[0];
+    hero.innerHTML = `<img src="${p.m}" alt="${s.en}"><figcaption class="credit"><a href="${p.o}" target="_blank" rel="noopener">${p.a}</a></figcaption>`;
+  }
+  if(!heroOf(s.id) && !data.photos.length){
+    const hero = document.getElementById('hero');
+    if(hero) hero.innerHTML = `<div class="ph">${S(['Photo needs a connection','La foto necesita conexión'])}</div>`;
+  }
+  if(!data.photos.length){
+    box.innerHTML = P(data.err ? ['Photos need a connection, or use More > Save for offline while on Wi-Fi.','Las fotos necesitan conexión, o usen Más > Guardar sin conexión con wifi.'] : ['No photos for this season. Try All seasons.','No hay fotos de esta temporada. Prueben Todo el año.'], 'note');
+    return;
+  }
+  box.innerHTML = `<div class="gal">${data.photos.map((p, i) => `<button data-i="${i}" aria-label="Open photo ${i+1}"><img loading="lazy" src="${p.m}" alt=""></button>`).join('')}</div>
+    ${P(data.local ? ['Research grade iNaturalist observations between Asheville and Boone. Tap a photo for its author and license.','Observaciones de grado de investigación en iNaturalist entre Asheville y Boone. Toquen una foto para ver autor y licencia.'] : ['Research grade iNaturalist observations; few local ones, so these come from the whole range. Tap a photo for its author and license.','Observaciones de grado de investigación en iNaturalist; hay pocas locales, así que vienen de toda su distribución. Toquen una foto para ver autor y licencia.'], 'note')}`;
+  box.querySelectorAll('.gal button').forEach(b => b.onclick = () => openLB(data.photos[+b.dataset.i]));
+}
+const lb = document.getElementById('lb');
+function openLB(p){
+  const img = lb.querySelector('img');
+  img.src = p.m; const big = new Image(); big.onload = () => { if(!lb.hidden) img.src = p.l; }; big.src = p.l;
+  lb.querySelector('.cap').innerHTML = `${p.a}<br>${[p.p, p.d].filter(Boolean).join(', ')}<br><a href="${p.o}" target="_blank" rel="noopener">${S(['Open on iNaturalist','Abrir en iNaturalist'])}</a>`;
+  lb.hidden = false; lb.querySelector('.x').focus();
+}
+lb.querySelector('.x').onclick = () => { lb.hidden = true; };
+lb.onclick = e => { if(e.target === lb) lb.hidden = true; };
+document.addEventListener('keydown', e => { if(e.key === 'Escape') lb.hidden = true; });
+
+/* ---------- drawings ---------- */
+function coniferPanels(){
+  const twig = (kind) => {
+    let n = '';
+    for(let k = 0; k < 14; k++){
+      const x = 14 + k * 9;
+      if(kind === 'fir'){ if(Math.abs(x - 75) > 12) n += `<line x1="${x}" y1="58" x2="${x+3}" y2="42"/>`; n += `<line x1="${x}" y1="62" x2="${x+3}" y2="78"/>`; }
+      if(kind === 'spruce'){ n += `<line x1="${x}" y1="59" x2="${x+8}" y2="49"/><line x1="${x+2}" y1="60" x2="${x+11}" y2="58"/>`; if(Math.abs(x + 4 - 80) > 11) n += `<line x1="${x}" y1="61" x2="${x+8}" y2="71"/>`; }
+      if(kind === 'hem'){ n += `<line x1="${x}" y1="60" x2="${x-2}" y2="52"/><line x1="${x}" y1="60" x2="${x+4}" y2="52"/>`; if(Math.abs(x - 112) > 9) n += `<line x1="${x}" y1="60" x2="${x-2}" y2="68"/><line x1="${x}" y1="60" x2="${x+4}" y2="68"/>`; }
+    }
+    const w = kind === 'fir' ? 2.4 : kind === 'spruce' ? 1.4 : 1.9;
+    let cone = '';
+    if(kind === 'fir') cone = `<rect class="cone" x="66" y="18" width="18" height="40" rx="8"/>` + [0,1,2,3].map(j => `<path d="M66 ${25+j*8}q-5 1 -5 5M84 ${25+j*8}q5 1 5 5"/>`).join('');
+    if(kind === 'spruce') cone = `<line x1="80" y1="61" x2="80" y2="65"/><rect class="cone" x="72" y="65" width="16" height="30" rx="7"/>` + [0,1,2].map(j => `<path d="M73 ${72+j*7}q7 4 14 0"/>`).join('');
+    if(kind === 'hem') cone = `<line x1="112" y1="61" x2="112" y2="64"/><rect class="cone" x="105" y="64" width="14" height="20" rx="6"/>` + [0,1].map(j => `<path d="M105 ${70+j*6}l-4 2M119 ${70+j*6}l4 2"/>`).join('');
+    return `<svg viewBox="0 0 150 96" class="draw" aria-hidden="true"><g stroke-width="${w}">${n}</g><line x1="10" y1="60" x2="140" y2="60" stroke-width="2.6"/><g stroke-width="1.2">${cone}</g></svg>`;
+  };
+  const row = (kind, id, en, es) => `<div class="conifer">${twig(kind)}<div><a class="nm" href="#plant/${id}">${S([byId[id].en, byId[id].es])}</a>${P([en, es])}</div></div>`;
+  return row('fir','abies-fraseri','Flat, soft needles that will not roll. Cone stands upright and falls apart on the branch.','Agujas planas y suaves que no ruedan. Cono erguido que se deshace en la rama.')
+    + row('spruce','picea-rubens','Four sided, sharp needles that roll. Cone hangs and falls whole.','Agujas de cuatro lados, punzantes, que ruedan. Cono colgante que cae entero.')
+    + row('hem','tsuga-caroliniana','Short needles all around the twig; tangerine scent. Small hanging cone with scales open wide. Eastern hemlock: needles in two flat rows.','Agujas cortas alrededor de la ramita; olor a mandarina. Cono pequeño colgante con escamas abiertas. Tsuga del este: agujas en dos filas planas.')
+    + P(['Schematic drawings, not to scale.','Dibujos esquemáticos, sin escala.'], 'note');
+}
+function leafDrawing(){
+  const u = 36, x0 = 40;
+  const L = [
+    { id:'rhododendron-catawbiense', min:3, max:6, r:.17, sh:'round', en:'Rounded at both ends', es:'Redondeada en ambos extremos' },
+    { id:'rhododendron-maximum', min:4, max:8, r:.15, sh:'taper', en:'Tapered base, pointed tip', es:'Base angosta, punta aguda' },
+    { id:'kalmia-latifolia', min:2, max:5, r:.17, sh:'point', en:'Pointed at both ends', es:'Aguda en ambos extremos' }];
+  const path = (sh, y, len, h) => { const a = x0, b = x0 + len, Lq = len;
+    if(sh === 'round') return `M${a} ${y}C${a} ${y-.75*h} ${a+.15*Lq} ${y-h} ${a+.5*Lq} ${y-h}C${a+.85*Lq} ${y-h} ${b} ${y-.75*h} ${b} ${y}C${b} ${y+.75*h} ${a+.85*Lq} ${y+h} ${a+.5*Lq} ${y+h}C${a+.15*Lq} ${y+h} ${a} ${y+.75*h} ${a} ${y}Z`;
+    if(sh === 'taper') return `M${a} ${y}C${a+.3*Lq} ${y-.3*h} ${a+.4*Lq} ${y-h} ${a+.6*Lq} ${y-h}C${a+.85*Lq} ${y-h} ${a+.95*Lq} ${y-.4*h} ${b} ${y}C${a+.95*Lq} ${y+.4*h} ${a+.85*Lq} ${y+h} ${a+.6*Lq} ${y+h}C${a+.4*Lq} ${y+h} ${a+.3*Lq} ${y+.3*h} ${a} ${y}Z`;
+    return `M${a} ${y}C${a+.2*Lq} ${y-.7*h} ${a+.35*Lq} ${y-h} ${a+.5*Lq} ${y-h}C${a+.65*Lq} ${y-h} ${a+.8*Lq} ${y-.7*h} ${b} ${y}C${a+.8*Lq} ${y+.7*h} ${a+.65*Lq} ${y+h} ${a+.5*Lq} ${y+h}C${a+.35*Lq} ${y+h} ${a+.2*Lq} ${y+.7*h} ${a} ${y}Z`; };
+  let g = '', y = 0;
+  L.forEach(l => {
+    const len = (l.min + l.max) / 2 * u, h = len * l.r, s = byId[l.id];
+    y += h + 40;
+    g += `<text x="${x0}" y="${y - h - 24}" class="lt">${lang === 'es' ? s.es : s.en}</text><text x="${x0}" y="${y - h - 9}" class="ls">${lang === 'es' ? l.es : l.en}</text>`;
+    g += `<line x1="${x0-10}" y1="${y}" x2="${x0}" y2="${y}" stroke-width="2"/><path d="${path(l.sh, y, len, h)}" class="cone" stroke-width="1.2"/><line x1="${x0}" y1="${y}" x2="${x0+len-4}" y2="${y}" stroke-width=".8"/>`;
+    const by = y + h + 10;
+    g += `<line x1="${x0+l.min*u}" y1="${by}" x2="${x0+l.max*u}" y2="${by}" stroke="var(--spruce)" stroke-width="3"/><text x="${x0}" y="${by+15}" class="ls">${lang === 'es' ? `${l.min} a ${l.max} pulg. (${Math.round(l.min*2.54)} a ${Math.round(l.max*2.54)} cm)` : `${l.min} to ${l.max} in (${Math.round(l.min*2.54)} to ${Math.round(l.max*2.54)} cm)`}</text>`;
+    y = by + 22;
+  });
+  y += 24;
+  let ax = `<line x1="${x0}" y1="${y-10}" x2="${x0+8*u}" y2="${y-10}" stroke-width="1"/>`;
+  for(let t = 0; t <= 8; t++) ax += `<line x1="${x0+t*u}" y1="${y-10}" x2="${x0+t*u}" y2="${y-5}"/><text x="${x0+t*u}" y="${y+6}" class="ls" text-anchor="middle">${t}</text>`;
+  ax += `<text x="${x0+8*u}" y="${y+20}" class="ls" text-anchor="end">inches (2.54 cm each)</text>`;
+  return `<svg viewBox="0 0 360 ${y+28}" class="draw" role="img" aria-label="Leaf outlines of three evergreen shrubs at true relative size"><style>.lt{font:700 12px var(--sans);fill:var(--ink);stroke:none}.ls{font:11px var(--sans);fill:var(--ink2);stroke:none}</style>${g}${ax}</svg>`
+    + P(['Leaves drawn at the middle of their length range, on one scale; the green bar shows the full range.','Hojas dibujadas en el punto medio de su rango de longitud, en una misma escala; la barra verde muestra el rango completo.'], 'note');
+}
+
+/* ---------- places ---------- */
+const SITES = [
+ { n:'NC Arboretum and Bent Creek', ft:2200, w:['Asheville, near MP 393','Asheville, cerca del MP 393'], q:'North Carolina Arboretum Asheville', url:'https://ncarboretum.org/plan-a-visit/hours-directions-prices/',
+   see:['Labeled native plants to practice on before the field; cove forest; witch hazel in flower; native azaleas.','Plantas nativas etiquetadas para practicar; bosque de hondonada; hamamelis en flor; azaleas nativas.'],
+   st:['Open 8 a.m. to 7 p.m. in November; parking $25. Bent Creek trails next door are Pisgah National Forest.','Abierto de 8 a.m. a 7 p.m. en noviembre; estacionamiento $25. Los senderos de Bent Creek son del Bosque Nacional Pisgah.'],
+   c:['Arboretum: no collecting. Bent Creek: small personal amounts under Forest Service rules.','Arboreto: no se recolecta. Bent Creek: cantidades personales pequeñas según el Servicio Forestal.'],
+   sp:['hamamelis-virginiana','oxydendrum-arboreum','magnolia-fraseri','actaea-racemosa','polystichum-acrostichoides','mitchella-repens','fagus-grandifolia'] },
+ { n:'The Botanical Gardens at Asheville', ft:2100, w:['151 W.T. Weaver Blvd., by UNC Asheville','151 W.T. Weaver Blvd., junto a UNC Asheville'], q:'The Botanical Gardens at Asheville', url:'https://ashevillebotanicalgarden.org/',
+   see:['A short shaded loop of labeled Southern Appalachian natives; good first stop.','Un circuito corto y sombreado de plantas nativas etiquetadas; buena primera parada.'],
+   st:['Check hours before you go.','Revisen el horario antes de ir.'], c:['No collecting.','No se recolecta.'], sp:['galax-urceolata','trillium-grandiflorum','sanguinaria-canadensis'] },
+ { n:'Craggy Gardens and Craggy Pinnacle', ft:5500, w:['Parkway MP 364 (Pinnacle Trail MP 364.2, 0.7 mi; Gardens Trail MP 364.6, 0.8 mi)','Parkway MP 364 (sendero Pinnacle MP 364.2, 1,1 km; sendero Gardens MP 364.6, 1,3 km)'], q:'Craggy Gardens Visitor Center', url:'https://nps.gov/blri/planyourvisit/craggy-gradens-trail.htm',
+   see:['Catawba rhododendron heath balds, wind twisted yellow birch and beech, mountain ash, galax, lichens on every rock. 5,500 to 5,892 ft.','Brezales de rododendro de Catawba, abedules y hayas retorcidos por el viento, serbal, galax, líquenes en cada roca. 1.680 a 1.796 m.'],
+   st:['Open (NPS, November 6, 2026). Stay inside the summit wall.','Abierto (NPS, 6 de noviembre de 2026). Permanezcan dentro del muro de la cumbre.'], c:['No collecting.','No se recolecta.'],
+   sp:['rhododendron-catawbiense','sorbus-americana','betula-alleghaniensis','fagus-grandifolia','clethra-acuminata','polypodium-appalachianum','usnea','cladonia'] },
+ { n:'Mount Mitchell State Park', ft:6684, w:['Parkway MP 355.4, then NC 128','Parkway MP 355.4, luego NC 128'], q:'Mount Mitchell State Park', url:'https://ncparks.gov/mount-mitchell-state-park/',
+   see:['Spruce and fir forest at the highest point east of the Mississippi, 6,684 ft (2,037 m): Fraser fir, red spruce, hobblebush, mosses and lichens.','Bosque de abetos y píceas en el punto más alto al este del Misisipi, 2.037 m: abeto de Fraser, pícea roja, viburno, musgos y líquenes.'],
+   st:['Open 7 a.m. to 6 p.m. Reach it only from Asheville: the Parkway north of the park is closed. Old Mitchell Trail partly closed.','Abierto de 7 a.m. a 6 p.m. Solo se llega desde Asheville: la Parkway al norte del parque está cerrada. Sendero Old Mitchell parcialmente cerrado.'],
+   c:['No collecting without a state Research Activity Permit.','No se recolecta sin permiso estatal de investigación.'], sp:['abies-fraseri','picea-rubens','viburnum-lantanoides','sorbus-americana','usnea','polytrichum-commune'] },
+ { n:'Linville Falls', ft:3300, w:['Parkway MP 316.4 spur road','Ramal del Parkway en MP 316.4'], q:'Linville Falls Visitor Center Blue Ridge Parkway', url:'https://www.nps.gov/blri/planyourvisit/linville-falls-trails.htm',
+   see:['Old hemlock forest, Carolina hemlock on the gorge rim, great rhododendron, doghobble, ferns, rock tripe.','Bosque viejo de tsugas, tsuga de Carolina en el borde de la garganta, rododendro grande, doghobble, helechos, tripa de roca.'],
+   st:['Linville Falls Trail to Erwins View open. Gorge Trail, Duggers Creek, campground and picnic area closed.','Sendero a Erwins View abierto. Gorge Trail, Duggers Creek, campamento y área de picnic cerrados.'], c:['No collecting.','No se recolecta.'],
+   sp:['tsuga-caroliniana','tsuga-canadensis','rhododendron-maximum','leucothoe-fontanesiana','galax-urceolata','dryopteris-marginalis','umbilicaria-mammulata'] },
+ { n:'Beacon Heights and Rough Ridge', ft:4500, w:['Parkway MP 305.2 and MP 302.8 (Tanawha Trail)','Parkway MP 305.2 y MP 302.8 (sendero Tanawha)'], q:'Rough Ridge Overlook Blue Ridge Parkway', url:'https://www.nps.gov/blri/planyourvisit/nc-trails.htm',
+   see:['Rock outcrops with mountain laurel, Catawba rhododendron, galax, wintergreen, rock tripe and reindeer lichens, seen from a boardwalk. About 4,200 to 4,800 ft.','Afloramientos con laurel de montaña, rododendro de Catawba, galax, gaulteria, tripa de roca y líquenes de reno, desde una pasarela. Unos 1.280 a 1.460 m.'],
+   st:['Open. Linn Cove Visitor Center closed.','Abierto. Centro de visitantes de Linn Cove cerrado.'], c:['No collecting. Stay on the boardwalk: rare plants grow here.','No se recolecta. Permanezcan en la pasarela: aquí crecen plantas raras.'],
+   sp:['kalmia-latifolia','rhododendron-catawbiense','gaultheria-procumbens','galax-urceolata','cladonia','umbilicaria-mammulata'] },
+ { n:'Grandfather Mountain', ft:5946, w:['State park (Profile Trail, NC 105) and private nature park (US 221)','Parque estatal (Profile Trail, NC 105) y parque natural privado (US 221)'], q:'Grandfather Mountain', url:'https://grandfather.com/hours',
+   see:['Spruce and fir on the summit ridges, heath balds, and many rare cliff plants, photo only. Calloway Peak 5,946 ft (1,812 m).','Píceas y abetos en las crestas, brezales y muchas plantas raras de riscos, solo foto. Calloway Peak, 1.812 m.'],
+   st:['State park: upper Profile Trail open, lower part closed; free trail permit at trailhead. Nature park: 9 a.m. to 5 p.m., last entry 3:30 p.m., closed November 26.','Parque estatal: parte alta del Profile Trail abierta, parte baja cerrada; permiso gratuito en el inicio. Parque natural: 9 a.m. a 5 p.m., última entrada 3:30 p.m., cerrado el 26 de noviembre.'],
+   c:['No collecting.','No se recolecta.'], sp:['abies-fraseri','picea-rubens','rhododendron-vaseyi','liatris-helleri','solidago-spithamaea','geum-radiatum'] },
+ { n:'Julian Price Park and Price Lake', ft:3400, w:['Parkway MP 296.5 to 297 (Price Lake Loop 2.7 mi; Boone Fork 5.5 mi)','Parkway MP 296.5 a 297 (circuito Price Lake 4,3 km; Boone Fork 8,9 km)'], q:'Price Lake Blue Ridge Parkway', url:'https://www.nps.gov/blri/planyourvisit/nc-trails.htm',
+   see:['Stream and lake edges: great rhododendron, doghobble, yellow birch, peat moss, haircap moss.','Orillas de arroyo y lago: rododendro grande, doghobble, abedul amarillo, esfagno, musgo pelo de oro.'],
+   st:['Open, with single lane work zones.','Abierto, con zonas de obra a un carril.'], c:['No collecting.','No se recolecta.'],
+   sp:['rhododendron-maximum','leucothoe-fontanesiana','betula-alleghaniensis','sphagnum','polytrichum-commune'] },
+ { n:'Moses H. Cone Memorial Park', ft:3900, w:['Parkway MP 294, Blowing Rock (carriage roads 0.5 to 4.3 mi)','Parkway MP 294, Blowing Rock (caminos de 0,8 a 6,9 km)'], q:'Moses H. Cone Memorial Park', url:'https://www.nps.gov/blri/planyourvisit/nc-trails.htm',
+   see:['Easy walking among mountain laurel, rhododendron, hemlock, witch hazel, clubmoss, and lichens on old fences. 3,600 to 4,558 ft.','Caminatas fáciles entre laurel de montaña, rododendro, tsuga, hamamelis, licopodio y líquenes en cercas viejas. 1.100 a 1.390 m.'],
+   st:['Open, with single lane work zones.','Abierto, con zonas de obra a un carril.'], c:['No collecting.','No se recolecta.'],
+   sp:['kalmia-latifolia','hamamelis-virginiana','diphasiastrum-digitatum','tsuga-canadensis','usnea'] },
+ { n:'Daniel Boone Native Gardens', ft:3300, w:['651 Horn in the West Drive, Boone','651 Horn in the West Drive, Boone'], q:'Daniel Boone Native Gardens Boone', url:'https://www.danielboonenativegardens.org/hours-fees',
+   see:['More than 200 labeled native trees, shrubs and wildflowers of the High Country.','Más de 200 árboles, arbustos y flores nativas etiquetadas de la región alta.'],
+   st:['Open daily in daylight, weather permitting.','Abierto a diario con luz de día, si el clima lo permite.'], c:['No collecting.','No se recolecta.'], sp:[] },
+ { n:'Christmas tree farms', ft:3800, w:['Watauga, Avery and Ashe counties around Boone','Condados de Watauga, Avery y Ashe alrededor de Boone'], q:'choose and cut Christmas tree farm Boone NC', url:'https://www.visitnc.com/list/choose-cut-and-stay-christmas-tree-capital',
+   see:['The legal source of Fraser fir samples: buy boughs or a small tree.','La fuente legal de muestras de abeto de Fraser: compren ramas o un árbol pequeño.'],
+   st:['Most choose and cut farms open in mid to late November; call ahead.','La mayoría de las fincas abren a mediados o fines de noviembre; llamen antes.'], c:['Buy samples.','Compren muestras.'], sp:['abies-fraseri'] }
+];
+const OFFROUTE = [
+ ['Graveyard Fields and Black Balsam Knob','Graveyard Fields y Black Balsam Knob','MP 418.8 to 420.2, southwest of Asheville. Open shrub balds, mountain fetterbush, Fraser fir, mountain ash. Graveyard Fields was open on November 6; check FS Road 816 to Black Balsam.','MP 418.8 a 420.2, al suroeste de Asheville. Brezales abiertos, pieris de montaña, abeto de Fraser, serbal. Graveyard Fields estaba abierto el 6 de noviembre; revisen el camino FS 816 a Black Balsam.'],
+ ['Roan Mountain (Carvers Gap)','Roan Mountain (Carvers Gap)','NC 261 from Bakersville, about 1.5 hours from Asheville or Boone. World famous grassy balds, Gray\'s lily, Roan Mountain bluet. Exposed and icy in November; check road status.','NC 261 desde Bakersville, a unos 90 minutos de Asheville o Boone. Famosas cumbres de pasto, lirio de Gray, azulita de Roan. Expuesto y helado en noviembre; revisen el estado de la vía.'],
+ ['Elk Knob State Park','Parque Estatal Elk Knob','About 20 minutes north of Boone. Northern hardwood forest on a high summit. Check the park page for current access.','A unos 20 minutos al norte de Boone. Bosque de frondosas norteñas en una cumbre alta. Revisen la página del parque.'],
+ ['Linville Gorge rims','Bordes de Linville Gorge','Table Rock, Hawksbill, Shortoff. Carolina hemlock and mountain golden heather country; Helene damage, hazardous terrain.','Table Rock, Hawksbill, Shortoff. Zona de tsuga de Carolina y hudsonia de montaña; daños de Helene, terreno peligroso.']
+];
+function viewPlaces(){
+  const maps = q => 'https://www.google.com/maps/search/?api=1&query=' + enc(q);
+  app.innerHTML = `<h1 style="margin-top:18px">${S(['Where to go','Dónde ir'])}</h1>
+  ${P(['Plan two bases, Asheville and Boone. The Parkway is still closed between milepost (MP) 344.2 and 355.3 after Hurricane Helene, so you cannot drive the Parkway from Mount Mitchell to Linville Falls.','Planeen dos bases, Asheville y Boone. La Parkway sigue cerrada entre los MP 344,2 y 355,3 después del huracán Helene: no se puede ir por la Parkway del Monte Mitchell a Linville Falls.'])}
+  <div class="callout g">${P(['Status below is from November 6, 2026. Ice closes high sections with little notice; check the road status page each morning.','El estado es del 6 de noviembre de 2026. El hielo cierra tramos altos sin aviso; revisen la página cada mañana.'])}<p><a href="https://www.nps.gov/blri/planyourvisit/roadclosures.htm" target="_blank" rel="noopener">${S(['NPS road status and closures','Estado de vías y cierres del NPS'])}</a></p></div>
+  ${H2(['Three day plan','Plan de tres días'])}
+  <ol class="steps">
+   ${LI(['<b>Day 1, from Asheville.</b> NC Arboretum in the morning for practice with labeled plants. Drive the Parkway north to Craggy Gardens (about 45 minutes) and on to Mount Mitchell. Return the same way.','<b>Día 1, desde Asheville.</b> Arboreto por la mañana para practicar con plantas etiquetadas. Parkway al norte hasta Craggy Gardens (unos 45 minutos) y el Monte Mitchell. Regreso por la misma ruta.'])}
+   ${LI(['<b>Day 2, Asheville to Boone.</b> I-40 east to Marion, then US 221 north to Linville Falls. Continue on the Parkway north past Beacon Heights and Rough Ridge to Boone.','<b>Día 2, de Asheville a Boone.</b> I-40 al este hasta Marion y US 221 al norte hasta Linville Falls. Sigan por la Parkway al norte, pasando Beacon Heights y Rough Ridge, hasta Boone.'])}
+   ${LI(['<b>Day 3, from Boone.</b> Price Park and Moses Cone in the morning. In the afternoon, buy legal samples at a Christmas tree farm and a native nursery, and visit Daniel Boone Native Gardens.','<b>Día 3, desde Boone.</b> Price Park y Moses Cone por la mañana. En la tarde, compren muestras legales en una finca de árboles de Navidad y un vivero nativo, y visiten Daniel Boone Native Gardens.'])}
+  </ol>
+  ${P(['Sunset is around 5:20 p.m.; finish high trails by 4:30. Expect frost and strong wind above 5,000 ft. Hunting seasons are open in Pisgah National Forest: wear bright orange off the Parkway.','El sol se pone hacia las 5:20 p.m.; terminen los senderos altos antes de las 4:30. Esperen heladas y viento fuerte sobre 1.500 m. Hay temporada de caza en el Bosque Pisgah: usen naranja fuerte fuera de la Parkway.'], 'note')}
+  ${H2(['Sites, from Asheville to Boone','Sitios, de Asheville a Boone'])}
+  <ul class="blocks">${SITES.map(s => `<li><h3>${s.n}</h3>
+    <p class="meta">${S(s.w)}</p>${P(s.see)}${P(s.st, 'note')}
+    <p><span class="code ${s.c[0].startsWith('Buy') ? 'B' : 'X'}">${S(s.c)}</span></p>
+    ${s.sp.length ? `<div class="splinks">${s.sp.map(id => `<a class="${byId[id].nov ? 'n' : ''}" href="#plant/${id}">${common(byId[id])}</a>`).join('')}</div>` : ''}
+    <div class="maplinks"><a href="${maps(s.q)}" target="_blank" rel="noopener">${S(['Map','Mapa'])}</a><a href="${s.url}" target="_blank" rel="noopener">${S(['Official page','Página oficial'])}</a></div></li>`).join('')}</ul>
+  ${H2(['If you have extra time','Si les sobra tiempo'])}
+  <ul class="blocks">${OFFROUTE.map(o => `<li><h3>${S([o[0], o[1]])}</h3>${P([o[2], o[3]])}<div class="maplinks"><a href="${maps(o[0] + ' North Carolina')}" target="_blank" rel="noopener">${S(['Map','Mapa'])}</a></div></li>`).join('')}</ul>
+  ${H2(['Reference specimens','Especímenes de referencia'])}
+  ${P(['The I. W. Carpenter Jr. Herbarium at Appalachian State University in Boone holds pressed specimens of these species. Contacting its curator before the trip may give you reference material without collecting at all.','El herbario I. W. Carpenter Jr. de Appalachian State University, en Boone, guarda especímenes prensados de estas especies. Contactar a su curador antes del viaje puede darles material de referencia sin recolectar.'])}`;
+}
+
+/* ---------- rules ---------- */
+function viewRules(){
+  const land = [
+    [['Blue Ridge Parkway (National Park Service)','Blue Ridge Parkway (Servicio de Parques Nacionales)'],'X',
+     ['No plants or plant parts, living or dead, including fallen leaves, cones, mosses and lichens. One exception for personal use: up to 1 gallon per person per day of listed berries and mushrooms, and 1 bushel of listed nuts and fruits. American chestnut burrs and seeds are always prohibited. Violations are federal offenses, with fines up to $5,000 and up to 6 months in jail.','Ninguna planta ni parte de planta, viva o muerta, incluidas hojas caídas, conos, musgos y líquenes. Una excepción para uso personal: hasta 1 galón (3,8 L) por persona al día de bayas y hongos de la lista, y 1 bushel (35 L) de nueces y frutos de la lista. Los erizos y semillas de castaño americano siempre están prohibidos. Las infracciones son delitos federales, con multas de hasta $5.000 y hasta 6 meses de cárcel.'],
+     ['Scientific collecting needs an NPS Scientific Research and Collecting Permit, applied for through the Research Permit and Reporting System; specimens remain federal property.','La recolección científica requiere un permiso de investigación del NPS, que se solicita en el sistema RPRS; los especímenes siguen siendo propiedad federal.'],
+     [['Parkway compendium','https://www.nps.gov/blri/learn/management/compendium-cfr-2-1.htm'],['NPS research permits (RPRS)','https://irma.nps.gov/RPRS/']]],
+    [['NC State Parks (Mount Mitchell, Grandfather Mountain, Elk Knob)','Parques estatales de NC (Mount Mitchell, Grandfather Mountain, Elk Knob)'],'X',
+     ['Removing any plant or fungus is prohibited. Requests for personal collecting are denied.','Se prohíbe retirar cualquier planta u hongo. Se niegan las solicitudes de uso personal.'],
+     ['A Research Activity Permit allows scientific or educational collecting; classes that collect need one too.','Un permiso de actividad de investigación autoriza la recolección científica o educativa; los cursos que recolectan también lo necesitan.'],
+     [['NC Parks rules','https://www.ncparks.gov/about-us/guidelines-park-rules-and-regulations']]],
+    [['Pisgah National Forest (U.S. Forest Service)','Bosque Nacional Pisgah (Servicio Forestal)'],'P',
+     ['Small personal amounts of fruits, nuts, cones, mushrooms and some plants need no permit. Bulk or commercial collecting needs a forest products permit. Ginseng collection is prohibited and no permits are issued.','Pequeñas cantidades personales de frutos, nueces, conos, hongos y algunas plantas no requieren permiso. La recolección en volumen o comercial requiere permiso. El ginseng está prohibido y no se emiten permisos.'],
+     ['For research use, call the Grandfather Ranger District (Linville and Boone side) or the Appalachian Ranger District (north of Asheville) first. No harvesting in wilderness areas such as Linville Gorge.','Para investigación, llamen primero al distrito Grandfather (lado de Linville y Boone) o al distrito Appalachian (norte de Asheville). No se cosecha en áreas silvestres como Linville Gorge.'],
+     [['USFS forest products permits','https://fs.usda.gov/r08/northcarolina/permits/forest-products-permits']]],
+    [['Private land','Terreno privado'],'P',
+     ['Only with the owner\'s permission, in writing. North Carolina law covers many plants in this guide (details below).','Solo con permiso del dueño, por escrito. La ley de Carolina del Norte cubre muchas plantas de esta guía (detalles abajo).'], null, []],
+    [['Gardens and private preserves','Jardines y reservas privadas'],'X',
+     ['NC Arboretum, Botanical Gardens at Asheville, Daniel Boone Native Gardens, Grandfather Mountain nature park: no collecting. Use them to learn from labeled plants.','Arboreto, Jardín Botánico de Asheville, Daniel Boone Native Gardens, parque natural de Grandfather: no se recolecta. Úsenlos para aprender con plantas etiquetadas.'], null, []],
+    [['Farms and nurseries','Fincas y viveros'],'B',
+     ['Buying is the easiest legal source: Fraser fir from Christmas tree farms; rhododendron, mountain laurel, doghobble, wintergreen, witch hazel, Christmas fern from native nurseries.','Comprar es la fuente legal más fácil: abeto de Fraser en fincas de árboles de Navidad; rododendro, laurel de montaña, doghobble, gaulteria, hamamelis y helecho de Navidad en viveros nativos.'], null, []]
+  ];
+  app.innerHTML = `<h1 style="margin-top:18px">${S(['Collecting rules','Reglas de recolección'])}</h1>
+  ${P(['Most of your route is public land where removing plants, even fallen leaves and cones, is prohibited without a permit, and permits take weeks to months. Photograph on public land; take physical samples only on private land with written permission, or buy them.','La mayor parte de su ruta es tierra pública donde se prohíbe retirar plantas, incluso hojas y conos caídos, sin permiso, y los permisos tardan semanas o meses. Fotografíen en tierra pública; tomen muestras físicas solo en terreno privado con permiso escrito, o cómprenlas.'])}
+  <ul class="blocks">${land.map(l => `<li><h3>${S(l[0])}</h3><p><span class="code ${l[1]}">${S(l[1]==='X' ? ['No collecting','No se recolecta'] : l[1]==='P' ? ['Limited, with permission or permit','Limitado, con permiso'] : ['Buy legally','Comprar legalmente'])}</span></p>${P(l[2])}${l[3] ? P(l[3], 'note') : ''}${l[4].length ? `<div class="maplinks">${l[4].map(k => `<a href="${k[1]}" target="_blank" rel="noopener">${k[0]}</a>`).join('')}</div>` : ''}</li>`).join('')}</ul>
+  ${H2(['North Carolina plant laws','Leyes de plantas de Carolina del Norte'])}
+  <ul class="blocks">
+   <li><h3>G.S. 14-129</h3>${P(['Digging up, pulling up or taking listed wild plants from another person\'s land or public land requires a permit signed by the owner, in your possession. The list includes rhododendron, azalea, mountain laurel, trillium, bloodroot, all orchids, white pine, American holly and flowering dogwood. Class 3 misdemeanor, $75 to $175 per plant.','Desenterrar, arrancar o tomar plantas silvestres de la lista de un terreno ajeno o público requiere un permiso firmado por el dueño, que deben llevar consigo. La lista incluye rododendro, azalea, laurel de montaña, trilio, sanguinaria, todas las orquídeas, pino blanco, acebo americano y cornejo florido. Falta de clase 3, de $75 a $175 por planta.'])}<div class="maplinks"><a href="https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_14/GS_14-129.html" target="_blank" rel="noopener">${S(['Read the statute','Leer la ley'])}</a></div></li>
+   <li><h3>G.S. 106-202.19</h3>${P(['Protected plants, and also ginseng, galax and Venus flytrap, may be taken from another person\'s land only with the owner\'s written, dated permit, valid for no more than 180 days and naming the species. Class 2 misdemeanor; repeat violations can bring civil penalties up to $2,000. State protected plants also need a Protected Plant Permit, even with the owner\'s consent.','Las plantas protegidas, y también el ginseng, la galax y la venus atrapamoscas, solo se pueden tomar de un terreno ajeno con permiso escrito y fechado del dueño, válido hasta 180 días y con la especie indicada. Falta de clase 2; la reincidencia puede traer multas civiles de hasta $2.000. Las plantas protegidas por el estado requieren además un permiso especial, incluso con el consentimiento del dueño.'])}<div class="maplinks"><a href="https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_106/GS_106-202.19.html" target="_blank" rel="noopener">${S(['Read the statute','Leer la ley'])}</a><a href="https://www.ncagr.gov/divisions/plant-industry/plant-protection/plant-conservation-program/permits" target="_blank" rel="noopener">${S(['Protected plant permits','Permisos de plantas protegidas'])}</a></div></li>
+  </ul>
+  ${H2(['Never collect','Nunca recolectar'])}
+  ${P(['All species in the Rare group, anywhere, plus these:','Todas las especies del grupo Raras, en cualquier lugar, y además estas:'])}
+  <table><thead><tr><th>${S(['Plant','Planta'])}</th><th>${S(['Why','Por qué'])}</th></tr></thead><tbody>
+   ${SP.filter(s => s.g === 'rar').map(s => `<tr><td><a href="#plant/${s.id}">${common(s)}</a><br><i>${s.sci}</i></td><td>${S(s.law)}</td></tr>`).join('')}
+   ${window.OTHER_PROTECTED.map(o => `<tr><td>${S([o[0], o[1]])}<br><i>${o[2]}</i></td><td>${S([o[3], o[4]])}</td></tr>`).join('')}
+  </tbody></table>
+  ${H2(['Ethics in the field','Ética en el campo'])}
+  <ul class="check">
+   ${['Photograph first; a sharp photo with place and date, posted to iNaturalist, is a valid scientific record.|Primero fotografíen; una foto nítida con lugar y fecha, subida a iNaturalist, es un registro científico válido.',
+     'Take a sample only where you see at least 20 plants of the species, and no more than 1 in 20.|Tomen una muestra solo donde vean al menos 20 plantas de la especie, y no más de 1 de cada 20.',
+     'Take a branch tip, never roots or whole plants. Prefer fallen material on private land.|Tomen la punta de una rama, nunca raíces ni plantas enteras. Prefieran material caído en terreno privado.',
+     'Stay on trails and boardwalks on balds and rock outcrops; one footprint can destroy a rare plant\'s patch.|Permanezcan en senderos y pasarelas en cumbres y afloramientos; una pisada puede destruir la mancha de una planta rara.',
+     'Keep exact locations of rare plants private. Do not geotag them on social media; iNaturalist hides them automatically.|Mantengan privadas las ubicaciones de plantas raras. No las geoetiqueten en redes sociales; iNaturalist las oculta automáticamente.',
+     'Do not bend or break plants for a cleaner photo.|No doblen ni quiebren plantas para una foto más limpia.',
+     'Clean boots and gear between sites to avoid moving soil pathogens and hemlock woolly adelgid.|Limpien botas y equipo entre sitios para no trasladar patógenos del suelo ni el adelgido de la tsuga.'
+    ].map(x => { const [e, s] = x.split('|'); return `<li>${S([e, s])}</li>`; }).join('').replace(/<li>/g, '<li><span>').replace(/<\/li>/g, '</span></li>')}
+  </ul>
+  ${H2(['Samples traveling to Colombia','Muestras que viajan a Colombia'])}
+  ${P(['The Instituto Colombiano Agropecuario (ICA) regulates plant material entering Colombia. Live plants, seeds and soil carry the highest risk of confiscation. Before packing any sample, confirm ICA requirements, or image the samples at NC State and carry only the files.','El Instituto Colombiano Agropecuario (ICA) regula el material vegetal que entra a Colombia. Las plantas vivas, las semillas y el suelo tienen el mayor riesgo de decomiso. Antes de empacar cualquier muestra, confirmen los requisitos del ICA, o tomen las imágenes en NC State y lleven solo los archivos.'])}
+  ${P(['This is a plain language summary, not legal advice; confirm specific cases with each agency.','Este es un resumen en lenguaje sencillo, no asesoría legal; confirmen los casos específicos con cada agencia.'], 'note')}`;
+}
+
+/* ---------- field kit ---------- */
+const KIT = [
+ ['Hand lens, 10x to 20x','Lupa de 10x a 20x'],['Camera or phone with macro lens, small diffuser, millimeter scale, gray card','Cámara o teléfono con lente macro, difusor pequeño, escala milimétrica, tarjeta gris'],
+ ['Phone with GPS; iNaturalist works offline and uploads later','Teléfono con GPS; iNaturalist funciona sin conexión y sube después'],['Field notebook and pencil','Libreta de campo y lápiz'],
+ ['Paper coin envelopes and small paper bags for dry material','Sobres y bolsitas de papel para material seco'],['Zipper bags with damp paper towel and a small cooler for fresh leaves','Bolsas herméticas con toalla húmeda y una nevera pequeña para hojas frescas'],
+ ['Small hard containers for fragile capsules, mosses and lichens','Recipientes rígidos para cápsulas, musgos y líquenes frágiles'],['Silica gel packets for fast drying','Sobres de gel de sílice para secado rápido'],
+ ['Plant press or folded newspaper, blotters and cardboard','Prensa o periódico doblado, papel secante y cartón'],['Small pruners, fine scissors, forceps, nitrile gloves','Tijeras de podar, tijeras finas, pinzas, guantes de nitrilo'],
+ ['Printed, dated landowner permission','Permiso del propietario impreso y fechado'],['Blaze orange vest or hat, warm layers, headlamp','Chaleco o gorro naranja, ropa abrigada, linterna frontal']];
+function viewKit(){
+  const kit = store.get('brg-kit', {});
+  app.innerHTML = `<h1 style="margin-top:18px">${S(['Field kit and protocol','Equipo y protocolo de campo'])}</h1>
+  ${P(['Photograph first, record everything, take little, and package each sample for the instrument it will meet.','Primero fotografíen, registren todo, tomen poco y empaquen cada muestra para el instrumento que la espera.'])}
+  ${H2(['A photo record for each plant','Un registro fotográfico por planta'])}
+  ${P(['Give each plant one number and use it in photos, notes and sample labels. Use the notes box on each plant page; it saves on this phone.','Asignen a cada planta un número y úsenlo en fotos, notas y etiquetas. Usen el cuadro de notas de cada ficha; se guarda en este teléfono.'])}
+  <ol class="steps">${[
+    ['Identity: scientific name, how sure you are.','Identidad: nombre científico y grado de certeza.'],
+    ['Date, place, GPS point and elevation. Keep rare plant locations private.','Fecha, lugar, punto GPS y altitud. Mantengan privadas las ubicaciones de plantas raras.'],
+    ['Whole plant photo, without moving it.','Foto de la planta entera, sin moverla.'],
+    ['Details: leaf top and underside, buds, bark, fruit, with the scale and ID card in frame.','Detalles: haz y envés de la hoja, yemas, corteza, fruto, con la escala y la tarjeta en el cuadro.'],
+    ['Habitat photo: forest shade, stream, slope or bare rock.','Foto del hábitat: sombra del bosque, arroyo, ladera o roca.'],
+    ['Soil, by eye only: litter, rocks, moisture, color. Write "pH not measured" unless you measured it with permission.','Suelo, a simple vista: hojarasca, rocas, humedad, color. Escriban "pH no medido" salvo que lo midieran con permiso.'],
+    ['Life stage: buds, flowers, fruit, or leaves only.','Etapa: yemas, flores, frutos o solo hojas.']].map(LI).join('')}</ol>
+  ${H2(['Kit checklist','Lista de equipo'])}
+  <ul class="check">${KIT.map((k, i) => `<li><input type="checkbox" id="k${i}" ${kit[i] ? 'checked' : ''}><label for="k${i}">${S(k)}</label></li>`).join('')}</ul>
+  ${H2(['Packaging by imaging method','Empaque según el método de imagen'])}
+  <ul class="blocks">
+   <li>${H3(['Electron microscopy (SEM)','Microscopía electrónica (SEM)'])}${P(['Best: seeds, spores, pollen, capsules, leaf hairs, stomata, lichen surfaces, moss lamellae. Dry material flat in paper envelopes keeps for months. Fresh leaves: small pieces in 70 percent ethanol or per the lab\'s protocol; confirm with the lab before the trip.','Mejores: semillas, esporas, polen, cápsulas, pelos, estomas, superficies de líquenes, lamelas de musgo. El material seco, plano en sobres, dura meses. Hojas frescas: trozos pequeños en etanol al 70 por ciento o según el protocolo del laboratorio; confirmen antes del viaje.'])}</li>
+   <li>${H3(['Optical microscopy','Microscopía óptica'])}${P(['Best: leaf cross sections, fern sori, moss leaves, lichen layers, bark. Fresh material in a sealed bag with damp towel near 4 °C (39 °F), used within 48 hours. Mosses and lichens can be dried and rehydrated later.','Mejores: cortes de hoja, soros, hojas de musgo, capas de liquen, corteza. Material fresco en bolsa cerrada con toalla húmeda cerca de 4 °C, usado en 48 horas. Musgos y líquenes se pueden secar y rehidratar después.'])}</li>
+   <li>${H3(['Macro photography','Macrofotografía'])}${P(['Best: buds, capsules, cones, berries, bark, winter leaf color. Rigid container, cool, out of sun, within 24 hours. Note the temperature: rhododendron leaves uncurl as they warm.','Mejores: yemas, cápsulas, conos, bayas, corteza, color invernal. Recipiente rígido, fresco, sin sol, en 24 horas. Anoten la temperatura: las hojas de rododendro se desenrollan al calentarse.'])}</li>
+  </ul>
+  ${H2(['Pressing a voucher specimen','Prensar un ejemplar de referencia'])}
+  <ol class="steps">${[
+    ['Check the rules for that exact spot.','Revisen las reglas de ese lugar exacto.'],
+    ['Cut a branch tip 10 to 16 in (25 to 40 cm) with leaves and buds or fruit; for small herbs, one stem above ground.','Corten la punta de una rama de 25 a 40 cm con hojas y yemas o frutos; en hierbas pequeñas, un tallo sobre el suelo.'],
+    ['Write the field notes at once.','Escriban las notas de campo de inmediato.'],
+    ['Keep it cool in a bag until pressing, the same day if possible.','Manténganla fresca en una bolsa hasta prensarla, el mismo día si es posible.'],
+    ['Lay it flat in folded newspaper; turn one leaf to show the underside; bend long stems into a V or N.','Acomódenla plana en periódico doblado; volteen una hoja para mostrar el envés; doblen los tallos largos en V o N.'],
+    ['Stack cardboard, blotter, specimen, blotter, cardboard; strap the press tight.','Apilen cartón, secante, ejemplar, secante, cartón; aprieten la prensa.'],
+    ['Change damp blotters daily; most plants dry in 5 to 10 days, thick rhododendron leaves take longer.','Cambien los secantes cada día; la mayoría seca en 5 a 10 días, las hojas gruesas de rododendro tardan más.'],
+    ['Label and mount on acid free paper with the notes.','Etiqueten y monten en papel libre de ácido con las notas.']].map(LI).join('')}</ol>
+  ${H2(['Export my notes','Exportar mis notas'])}
+  ${P(['Download your notes and sightings as a spreadsheet file (CSV).','Descarguen sus notas y avistamientos como archivo de hoja de cálculo (CSV).'])}
+  <button class="btn" id="exp">${S(['Download notes','Descargar notas'])}</button>`;
+  app.querySelectorAll('.check input').forEach(cb => cb.onchange = () => { const k = store.get('brg-kit', {}); k[cb.id.slice(1)] = cb.checked; store.set('brg-kit', k); });
+  app.querySelector('#exp').onclick = exportNotes;
+}
+function exportNotes(){
+  const q = v => '"' + String(v || '').replace(/"/g, '""') + '"';
+  const rows = [['id','scientific_name','common_name','seen_on','notes','last_edit']];
+  SP.forEach(s => { if(SEEN[s.id] || NOTES[s.id]) rows.push([s.id, s.sci, s.en, SEEN[s.id] || '', NOTES[s.id] && NOTES[s.id].txt, NOTES[s.id] && NOTES[s.id].at]); });
+  const blob = new Blob([rows.map(r => r.map(q).join(',')).join('\n')], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'blue-ridge-notes.csv'; a.click();
+}
+
+/* ---------- more ---------- */
+function elevChart(){
+  const sites = [['NC Arboretum',2200,1],['Linville Falls',3300,2],['Rough Ridge',4500,1],['Craggy Gardens',5500,2],['Mount Mitchell',6684,1]];
+  const pct = ft => ((Math.max(ft, 1000) - 1000) / 6000 * 100).toFixed(2);
+  const rows = SP.filter(s => s.el && s.g !== 'rar').sort((a, b) => b.el[0] - a.el[0] || b.el[1] - a.el[1]);
+  return `<div class="elev"><div class="elev-sites">${sites.map(s => `<span class="r${s[2]}" style="left:${pct(s[1])}%"><b>${s[0]}</b>${comNum(s[1])} ft</span>`).join('')}</div>
+    <div class="elev-body">${sites.map(s => `<i class="elev-line" style="left:${pct(s[1])}%"></i>`).join('')}
+    ${rows.map(s => `<div class="elev-row"><div class="elev-name"><a href="#plant/${s.id}">${common(s)}</a> <i>${s.sci}</i></div><div class="elev-track"><b class="${s.el[0] >= 3900 ? 'hi' : ''} ${s.el[2] ? 'open' : ''}" style="left:${pct(s.el[0])}%;width:${(pct(s.el[1]) - pct(s.el[0])).toFixed(2)}%"></b></div></div>`).join('')}</div>
+    <div class="elev-axis">${[1000,2000,3000,4000,5000,6000,7000].map(t => `<span style="left:${pct(t)}%">${comNum(t)} ft<br>${dotNum(toM(t))} m</span>`).join('')}</div></div>
+    ${P(['Dark bars: species found only above about 3,900 ft; save the high stops for them. A square left end means the range continues below 1,000 ft. Ranges are approximate.','Barras oscuras: especies que solo crecen por encima de unos 1.200 m; reserven las paradas altas para ellas. Un extremo izquierdo recto indica que el rango sigue por debajo de 300 m. Rangos aproximados.'], 'note')}`;
+}
+function phenChart(){
+  const rows = SP.filter(s => s.fl);
+  const mon = lang === 'es' ? MON_ES : MON_EN;
+  let h = `<div class="phen"><span></span>${mon.map((m, i) => `<span class="mh ${i === 10 ? 'nov' : ''}">${m.charAt(0).toUpperCase()}</span>`).join('')}`;
+  rows.forEach(s => {
+    h += `<a class="nm2" href="#plant/${s.id}">${common(s)}</a>`;
+    for(let m = 1; m <= 12; m++){ const on = m >= s.fl[0] && m <= s.fl[1]; h += `<span class="c ${on ? 'f' : ''} ${m === 11 ? 'nov' : ''}" title="${mon[m-1]}"></span>`; }
+  });
+  return h + `</div><div class="legend"><span><i style="background:var(--spruce)"></i>${S(['Flowering (pollen for conifers)','Floración (polen en coníferas)'])}</span><span><i style="background:var(--track);box-shadow:inset 0 0 0 2px var(--hazel)"></i>${S(['November','Noviembre'])}</span></div>`;
+}
+const ANDES = [
+ ['Wintergreen, Gaultheria procumbens','Gaultheria erecta; reventadera, Gaultheria myrsinoides (Pernettya prostrata), Páramo de Sumapaz, 3,485 m','Same genus','Mismo género'],
+ ['Rhododendrons and mountain laurel','Pegamosco, Bejaria resinosa; uva camarona, Macleania rupestris; uva de anís, Cavendishia bracteata','Same family, Ericaceae, dominating shrubs near the top of both ranges','Misma familia, que domina los arbustos cerca de la cima de ambas cordilleras'],
+ ['Mountain sweet pepperbush, Clethra acuminata','Manzanito, Clethra fimbriata','Same genus','Mismo género'],
+ ['Hobblebush, Viburnum lantanoides','Garrocho, Viburnum triphyllum and V. tinoides','Same genus','Mismo género'],
+ ['Partridgeberry, Mitchella repens','Nertera granadensis, a creeping coffee family plant with orange berries, named for New Granada','Same family, Rubiaceae, and creeping berry habit','Misma familia y hábito rastrero con bayas'],
+ ['Mountain ash, Sorbus americana','Mortiño, Hesperomeles goudotiana','Same family, Rosaceae; small bird dispersed pomes','Misma familia; pomos pequeños dispersados por aves'],
+ ['Blueberries of the Craggy balds, Vaccinium','Agraz, Vaccinium floribundum','Same genus','Mismo género'],
+ ['Haircap and peat mosses, Usnea, Cladonia, rock tripe','Polytrichum, Sphagnum, Usnea, Cladonia and Umbilicaria in páramo bogs and outcrops','Same genera, the closest matches','Mismos géneros, las coincidencias más cercanas'],
+ ['Fan clubmoss, Diphasiastrum digitatum','Huperzia and Phlegmariurus clubmosses, very diverse in the páramo','Same family, Lycopodiaceae','Misma familia, Lycopodiaceae'],
+ ['Fraser fir and red spruce','Pino de pasto, Podocarpus oleifolius; pino romerón, Retrophyllum rospigliosii','Different families; no fir or spruce grows wild in South America; similar role in cool fog forest','Familias distintas; ningún abeto ni pícea crece silvestre en Suramérica; papel similar en el bosque nublado']];
+const GLOSS = [
+ ['Bald (grassy or heath)','Cumbre calva (de pasto o de brezo)','Treeless mountaintop covered by grass or shrubs','Cima sin árboles cubierta de pasto o arbustos'],
+ ['Bract','Bráctea','Leaf like part below a flower or cone scale','Pieza parecida a una hoja bajo una flor o escama'],
+ ['Catkin','Amento','Hanging spike of tiny flowers without petals','Espiga colgante de flores diminutas sin pétalos'],
+ ['Cove forest','Bosque de hondonada','Rich forest in a sheltered mountain valley','Bosque fértil en un valle protegido'],
+ ['Endemic','Endémica','Grows naturally in only one region','Crece de forma natural en una sola región'],
+ ['Frond','Fronda','Leaf of a fern','Hoja de helecho'],
+ ['Gametophyte','Gametófito','The small, separate sexual stage of ferns, mosses and clubmosses','La etapa sexual, pequeña y separada, de helechos, musgos y licopodios'],
+ ['Lichen','Liquen','A fungus living with algae or cyanobacteria','Un hongo que vive con algas o cianobacterias'],
+ ['Marcescence','Marcescencia','Dead leaves kept on the tree through winter','Hojas muertas que el árbol conserva en invierno'],
+ ['Milepost (MP)','Poste de milla (MP)','Numbered marker along the Parkway, counting up from Virginia south to Cherokee','Marcador numerado de la Parkway, que aumenta de Virginia al sur hasta Cherokee'],
+ ['Rhizome','Rizoma','Horizontal underground stem','Tallo subterráneo horizontal'],
+ ['Sorus (sori)','Soro (soros)','Cluster of spore cases on a fern leaf','Grupo de esporangios en la hoja de un helecho'],
+ ['Spodosol','Espodosol','Leached, acidic soil under high elevation conifers','Suelo lixiviado y ácido bajo coníferas de altura'],
+ ['Whorl','Verticilo','Three or more leaves in a ring at one point','Tres o más hojas en anillo en un punto']];
+function viewMore(anchor){
+  app.innerHTML = `<h1 style="margin-top:18px">${S(['More','Más'])}</h1>
+  <nav class="toc">${[['offline',['Save for offline','Guardar sin conexión']],['ecology',['Elevation and soils','Altitud y suelos']],['calendar',['Flowering calendar','Calendario de floración']],['andes',['Andes connections','Conexiones con los Andes']],['history',['History','Historia']],['glossary',['Glossary','Glosario']],['sources',['Sources','Fuentes']]].map(t => `<a href="#more/${t[0]}">${S(t[1])}</a>`).join('')}</nav>
+  ${H2(['Save for offline use','Guardar para usar sin conexión'], 'offline')}
+  ${P(['Cell service is poor along the Parkway. On Wi-Fi, save every photo and photo list to this phone (about 20 to 40 MB). Then add this page to your home screen.','La señal es mala en la Parkway. Con wifi, guarden todas las fotos y listas en este teléfono (unos 20 a 40 MB). Luego agreguen esta página a la pantalla de inicio.'])}
+  <button class="btn" id="save">${S(['Save photos for offline use','Guardar fotos sin conexión'])}</button>
+  <div class="prog" hidden><i></i></div><p class="note" id="savemsg"></p>
+  ${P(['iPhone: Share, then Add to Home Screen. Android: menu, then Install app or Add to Home screen.','iPhone: Compartir y luego Agregar a inicio. Android: menú y luego Instalar app o Agregar a pantalla de inicio.'], 'note')}
+  ${H2(['Elevation and soils','Altitud y suelos'], 'ecology')}
+  ${P(['Every 1,000 ft (300 m) you climb, the air is about 3.5 °F (2 °C) cooler, like driving several hundred kilometers north. The spruce and fir forest on the highest peaks is an ice age relict that resembles the forests of Canada.','Por cada 300 m de subida, el aire es unos 2 °C más frío, como viajar varios cientos de kilómetros al norte. El bosque de abetos y píceas de las cumbres es un relicto de la edad de hielo parecido a los bosques de Canadá.'])}
+  <table><thead><tr><th>${S(['Zone','Zona'])}</th><th>${S(['Forest','Bosque'])}</th><th>${S(['Soil','Suelo'])}</th></tr></thead><tbody>
+   <tr><td>${S(['Low, 2,000 to 3,500 ft','Baja, 600 a 1.100 m'])}</td><td>${S(['Oak and hickory, cove hardwoods, hemlock along streams','Robles y nogales, frondosas de hondonada, tsugas junto a arroyos'])}</td><td>${S(['Ultisols: old, weathered, clay below; Inceptisols in coves','Ultisoles: viejos, meteorizados, arcilla abajo; Inceptisoles en hondonadas'])}</td></tr>
+   <tr><td>${S(['Middle, 3,500 to 5,300 ft','Media, 1.100 a 1.600 m'])}</td><td>${S(['Northern hardwoods (birch, beech, buckeye), rhododendron thickets','Frondosas norteñas (abedul, haya, castaño de Indias), matorrales de rododendro'])}</td><td>${S(['Inceptisols: young, thin soils on steep slopes','Inceptisoles: jóvenes y delgados en laderas empinadas'])}</td></tr>
+   <tr><td>${S(['High, above 5,300 ft','Alta, sobre 1.600 m'])}</td><td>${S(['Spruce and fir forest, grassy and heath balds, rock outcrops','Bosque de abetos y píceas, cumbres de pasto y brezo, afloramientos'])}</td><td>${S(['Spodosols: bleached, leached upper layer over organic matter bound with iron and aluminum','Espodosoles: capa superior blanqueada y lixiviada sobre materia orgánica unida a hierro y aluminio'])}</td></tr>
+  </tbody></table>
+  ${P(['Soils here are acidic, commonly pH 3.5 to 5.5. Below about pH 5.5, aluminum dissolves and damages the roots of plants that are not adapted. The heath family (rhododendrons, laurel, wintergreen) and the conifers tolerate it, and acidity slows decay, so thick organic layers build up on the forest floor.','Los suelos son ácidos, por lo común de pH 3,5 a 5,5. Bajo pH 5,5 aprox., el aluminio se disuelve y daña las raíces de plantas no adaptadas. La familia de los brezos (rododendros, laurel, gaulteria) y las coníferas lo toleran, y la acidez frena la descomposición, por lo que se acumulan capas orgánicas gruesas.'])}
+  ${H3(['Elevation range of each species','Rango de altitud de cada especie'])}
+  ${elevChart()}
+  ${H2(['Flowering calendar','Calendario de floración'], 'calendar')}
+  ${P(['Flowering starts low and climbs about one week per 1,000 ft. In November only witch hazel is in flower.','La floración empieza abajo y sube cerca de una semana por cada 300 m. En noviembre solo el hamamelis está en flor.'])}
+  ${phenChart()}
+  ${H2(['Andes connections','Conexiones con los Andes'], 'andes')}
+  ${P(['Many genera here also grow in the Colombian Andes, about 1,500 m higher, because the tropics push each life zone upslope. The Appalachians began forming about 480 million years ago; the Eastern Cordillera of Colombia rose mostly in the last 10 million years.','Muchos géneros de aquí crecen también en los Andes colombianos, unos 1.500 m más arriba, porque el trópico desplaza cada zona de vida hacia arriba. Los Apalaches empezaron a formarse hace unos 480 millones de años; la Cordillera Oriental de Colombia se levantó sobre todo en los últimos 10 millones de años.'])}
+  <ul class="blocks">${ANDES.map(a => `<li><h3>${a[0]}</h3><p>${a[1]}</p>${P([a[2], a[3]], 'note')}</li>`).join('')}</ul>
+  ${P(['Colombian common names follow the Bogotá District list of native shrubs and the Jardín Botánico de Bogotá herbarium; names vary by region.','Los nombres comunes colombianos siguen la lista distrital de arbustos nativos de Bogotá y el herbario del Jardín Botánico de Bogotá; varían por región.'], 'note')}
+  ${H2(['A little history','Un poco de historia'], 'history')}
+  ${P(['When George Vanderbilt built the Biltmore Estate in Asheville, Frederick Law Olmsted set up a large nursery to supply native plants for its naturalistic landscape. Chauncey Beadle, hired in 1890 to run it, spent decades studying and collecting Southern Appalachian plants, especially native azaleas. His collection became the Azalea Garden at Biltmore. The North Carolina Arboretum, on former Biltmore land, sits on Frederick Law Olmsted Way.','Cuando George Vanderbilt construyó la finca Biltmore en Asheville, Frederick Law Olmsted creó un gran vivero para abastecer de plantas nativas su paisaje naturalista. Chauncey Beadle, contratado en 1890 para dirigirlo, pasó décadas estudiando y recolectando plantas de los Apalaches del Sur, sobre todo azaleas nativas. Su colección se convirtió en el Jardín de Azaleas de Biltmore. El Arboreto de Carolina del Norte, en antiguas tierras de Biltmore, está en Frederick Law Olmsted Way.'])}
+  ${H2(['Glossary','Glosario'], 'glossary')}
+  <table><tbody>${GLOSS.map(g => `<tr><td><b>${S([g[0], g[1]])}</b></td><td>${S([g[2], g[3]])}</td></tr>`).join('')}</tbody></table>
+  ${H2(['Sources and credits','Fuentes y créditos'], 'sources')}
+  ${P(['Photos load from Wikipedia and Wikimedia Commons (lead images) and from research grade iNaturalist observations with Creative Commons licenses; each photo links to its author and license. Text merges four earlier guides, checked against the sources below on November 7, 2026. Elevation ranges and dates are approximate.','Las fotos vienen de Wikipedia y Wikimedia Commons (imagen principal) y de observaciones de grado de investigación en iNaturalist con licencias Creative Commons; cada foto enlaza a su autor y licencia. El texto une cuatro guías anteriores, verificadas con las fuentes de abajo el 7 de noviembre de 2026. Los rangos de altitud y las fechas son aproximados.'])}
+  <ul class="links">${[
+   ['Blue Ridge Parkway compendium','https://www.nps.gov/blri/learn/management/compendium-cfr-2-1.htm'],['NPS road status','https://www.nps.gov/blri/planyourvisit/roadclosures.htm'],['NPS North Carolina trails','https://www.nps.gov/blri/planyourvisit/nc-trails.htm'],
+   ['NC State Parks rules','https://www.ncparks.gov/about-us/guidelines-park-rules-and-regulations'],['USFS forest products permits','https://fs.usda.gov/r08/northcarolina/permits/forest-products-permits'],
+   ['NC G.S. 14-129','https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_14/GS_14-129.html'],['NC G.S. 106-202.19','https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_106/GS_106-202.19.html'],
+   ['NC Plant Conservation Program','https://www.ncagr.gov/divisions/plant-industry/plant-protection/plant-conservation-program/permits'],['NC State Extension Plant Toolbox','https://plants.ces.ncsu.edu/'],
+   ['NC Native Plant Society: Gray\'s lily','https://ncwildflower.org/plant_galleries/details/lilium-grayi'],['NC Native Plant Society: mountain fetterbush','https://ncwildflower.org/plant_galleries/details/pieris-floribunda'],
+   ['USFWS: Blue Ridge goldenrod','https://www.fws.gov/species/blue-ridge-goldenrod-solidago-spithamaea'],['USFWS: Heller\'s blazing star','https://www.fws.gov/species/hellers-blazing-star-liatris-helleri'],
+   ['Grandfather Mountain rare species','https://grandfather.com/endangered-species/'],['Bogotá native shrubs list','https://www.ambientebogota.gov.co/documents/10184/9204829/04+Anexo.+Listado+preliminar+de+especies+arbustivas+a+implementar+en+procesos+de+restauracio%C2%B4n+de+a%C2%B4reas+del+Distrito+Capital+-+copia.pdf/13f4c6ab-ec7b-42a3-b8b9-514a20dee66b'],
+   ['Gymnosperm Database: Podocarpus oleifolius','https://www.conifers.org/po/Podocarpus_oleifolius.php']
+  ].map(l => `<li><a href="${l[1]}" target="_blank" rel="noopener">${l[0]}<span class="host">${new URL(l[1]).hostname.replace('www.','')}</span></a></li>`).join('')}</ul>`;
+  app.querySelector('#save').onclick = saveOffline;
+  if(anchor){ const el = document.getElementById(anchor); if(el) el.scrollIntoView(); }
+}
+
+/* ---------- offline save ---------- */
+async function saveOffline(){
+  const msg = document.getElementById('savemsg'), bar = app.querySelector('.prog'), fill = bar.querySelector('i');
+  const say = p => { if(msg) msg.innerHTML = S(p); };
+  if(!('caches' in window)){ say(['This browser cannot store photos offline. Open the page from its https address.','Este navegador no puede guardar fotos. Abran la página desde su dirección https.']); return; }
+  try{ if(navigator.storage && navigator.storage.persist) await navigator.storage.persist(); }catch(e){}
+  bar.hidden = false; say(['Collecting photo lists','Reuniendo listas de fotos']);
+  await loadWiki(true);
+  const urls = new Set();
+  let i = 0;
+  for(const s of SP){
+    const h = heroOf(s.id); if(h){ urls.add(h.src); urls.add(small(h.src)); }
+    const d = await loadInat(s, 'late');
+    let ph = d.photos;
+    if(ph.length < 3){ const all = await loadInat(s, 'all'); ph = ph.concat(all.photos); }
+    ph.slice(0, 6).forEach(p => urls.add(p.m));
+    i++; fill.style.width = (i / SP.length * 30) + '%';
+  }
+  const list = [...urls]; let done = 0, failed = 0;
+  const cache = await caches.open(IMG_CACHE);
+  const work = async () => {
+    while(list.length){
+      const u = list.pop();
+      try{ if(!(await cache.match(u))){ const r = await fetch(u, {mode:'no-cors'}); await cache.put(u, r); } }catch(e){ failed++; }
+      done++; fill.style.width = (30 + done / urls.size * 70) + '%';
+      say([`Saved ${done} of ${urls.size} photos`, `Guardadas ${done} de ${urls.size} fotos`]);
+    }
+  };
+  await Promise.all([work(), work(), work(), work()]);
+  say(failed ? [`Done. ${failed} photos could not be saved; try again later.`, `Listo. ${failed} fotos no se pudieron guardar; intenten más tarde.`]
+             : ['Done. Photos and lists are saved on this phone.','Listo. Fotos y listas guardadas en este teléfono.']);
+  store.set('brg-saved', Date.now());
+}
+
+/* ---------- start ---------- */
+route();
+loadWiki(false).then(() => { const h = location.hash || '#plants'; if(h === '#plants' || h.startsWith('#plant/')) route(); });
+if('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+})();
+</script>
+</body>
+</html>
